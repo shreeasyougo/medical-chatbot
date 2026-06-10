@@ -7,6 +7,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+print("KEY EXISTS:", os.getenv("GEMINI_API_KEY") is not None)
+print("KEY LENGTH:", len(os.getenv("GEMINI_API_KEY", "")))
+
 app = FastAPI()
 
 app.add_middleware(
