@@ -32,7 +32,7 @@ export default function Home() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8000/ask", {
+      const res = await fetch("https://medical-chatbot-nlka.onrender.com/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: question }),
