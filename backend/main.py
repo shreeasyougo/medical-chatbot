@@ -4,11 +4,11 @@ from pydantic import BaseModel
 import google.generativeai as genai
 import os
 from dotenv import load_dotenv
+import threading
+import requests
+import time
 
 load_dotenv()
-
-print("KEY EXISTS:", os.getenv("GEMINI_API_KEY") is not None)
-print("KEY LENGTH:", len(os.getenv("GEMINI_API_KEY", "")))
 
 app = FastAPI()
 
@@ -35,5 +35,4 @@ def root():
 
 @app.post("/ask")
 async def ask(q: Question):
-    response = model.generate_content(f"{SYSTEM_PROMPT}\n\nQuestion: {q.text}")
-    return {"answer": response.text}
+    respo
