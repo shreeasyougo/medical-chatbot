@@ -20,7 +20,7 @@ app.add_middleware(
 )
 
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-model = genai.GenerativeModel("gemini-flash-latest")
+model = genai.GenerativeModel("gemini-1.5-flash")
 
 SYSTEM_PROMPT = """You are a helpful medical assistant. Answer medical questions clearly and simply.
 Always remind users to consult a real doctor for serious concerns.
@@ -35,4 +35,15 @@ def root():
 
 @app.post("/ask")
 async def ask(q: Question):
-    respo
+    response = model.generate_content(f"{SYSTEM_PROMPT}\n\nQuestion: {q.text}")
+    return {"answer": response.text}
+
+def keep_alive():
+    while True:
+        time.sleep(14 * 60)
+        try:
+            requests.get("https://medical-chatbot-nlka.onrender.com")
+        except:
+            pass
+
+threading.Thread(target=keep_alive, daemon=True).start()
